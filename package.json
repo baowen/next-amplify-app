@@ -5,10 +5,15 @@
   "scripts": {
     "dev": "next dev -p 8080",
     "build": "next build && next export",
-    "start": "next start"
+    "start": "next start -p 8080"
   },
   "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
+    "govuk-frontend": "^3.10.2",
+    "govuk-frontend-react": "0.0.12",
     "next": "^10.0.3",
+    "next-transpile-modules": "^6.0.0",
+    "node-sass": "^5.0.0",
     "nookies": "^2.5.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"

@@ -1,17 +1,19 @@
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Header from '../../components/header';
 
-export default function PostBody() {
+export default function PostConfirmation() {
     const router = useRouter();
-    const [body, setBody] = useState('');
+    // const [body, setBody] = useState('');
     
 
-    const cookies = parseCookies();
-    console.log('check your answers: ',{ cookies });
-        let newPost = JSON.parse(cookies.newPost);
+    // const cookies = parseCookies();
+    // let newPost;
+    // if (cookies) {
+    //     newPost = JSON.parse(cookies.newPost);
+    // }
     
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -23,28 +25,35 @@ export default function PostBody() {
 
     
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <title>Confirmation</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Header />
             
-            <main className={styles.main}>
-                <h1 className={styles.body}>
-                    Confirmation
-                </h1>
-                <div>
-                    created with id:
-                </div>
+            <div className="govuk-width-container">
+                <main className="govuk-main-wrapper govuk-main-wrapper--l" id="main-content" role="main">
+                    <div className="govuk-grid-row">
+                        <div className="govuk-panel govuk-panel--confirmation">
+                            <h1 className="govuk-panel__title">
+                                Post complete
+                            </h1>
+                            <div className="govuk-panel__body">
+                                Your reference number<br></br><strong>HDJ2123F</strong>
+                            </div>
+                        </div>
+
  
                 
-                <form onSubmit={handleSubmit}>
-
-                    <p>
-                        <button type="submit">Back to Home</button>
-                    </p>
-                </form>
-            </main>
+                        <form onSubmit={handleSubmit}>
+                            <p>
+                                <button type="submit"className="govuk-button" >Back to Home</button>
+                            </p>
+                        </form>
+                    </div>
+                </main>
+            </div>
         </div>
     );
 }

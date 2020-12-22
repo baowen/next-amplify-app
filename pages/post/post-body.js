@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import React, { useState } from 'react';
 import { useRouter } from 'next/router'
+import Header from '../../components/header';
 
 export default function PostBody() {
     const router = useRouter();
@@ -10,9 +10,10 @@ export default function PostBody() {
     
 
     const cookies = parseCookies();
-    let newPost = JSON.parse(cookies.newPost);
-    console.log(newPost.title);
-    
+    let newPost;
+    if (cookies && cookies.newPost) {
+        newPost = JSON.parse(cookies.newPost);
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
         setBody('');
@@ -29,25 +30,34 @@ export default function PostBody() {
 
     
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <title>Enter the body of your post</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Header />
             
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Enter the body of your post
-                </h1>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="body">
-                        <input type="text" value={body} onChange={({target}) => setBody(target.value)} />
-                    </label>
-                    <p>
-                        <button type="submit">Continue</button>
-                    </p>
-                </form>
-            </main>
+            <div className="govuk-width-container ">
+                <main className="govuk-main-wrapper " id="main-content" role="main">
+                    <form onSubmit={handleSubmit}>
+                        <div className="govuk-form-group">
+                            <h1 className="govuk-label-wrapper">
+                                <label className="govuk-label govuk-label--l" for="body">
+                                    Enter the body of your post
+                                </label>
+                            </h1>
+                            <div id="body-hint" className="govuk-hint">
+                                Do not include personal or financial information, like your National Insurance number or credit card details.
+                            </div>
+                            <textarea className="govuk-textarea" id="body" name="body" rows="5" aria-describedby="body-hint" value={body} onChange={({target}) => setBody(target.value)}></textarea>
+                        </div>
+
+                        <p>
+                            <button type="submit" className="govuk-button" >Continue</button>
+                        </p>
+                    </form>
+                </main>
+            </div>
         </div>
     );
 }

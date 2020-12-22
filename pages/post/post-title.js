@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Header from '../../components/header';
 
 export default function PostTitle() {
     const router = useRouter();
@@ -32,25 +32,31 @@ export default function PostTitle() {
 
     
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <title>Enter the title of your post</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Header />
             
-            <main className={styles.main}>
-                <h1 className={styles.title}>
-                    Enter the title of your post
-                </h1>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="title">
-                        <input type="text" value={title} onChange={({target}) => setTitle(target.value)} />
-                    </label>
-                    <p>
-                        <button type="submit">Continue</button>
-                    </p>
-                </form>
-            </main>
+            <div className="govuk-width-container ">
+                <main className="govuk-main-wrapper " id="main-content" role="main">
+                    <form onSubmit={handleSubmit}>
+                        <div className="govuk-form-group">
+                            <h1 className="govuk-label-wrapper">
+                                <label class="govuk-label govuk-label--l" for="title">
+                                    What is the title of the post?
+                                </label>
+                            </h1>
+                            <input className="govuk-input" id="title" name="title" type="text" value={title} onChange={({target}) => setTitle(target.value)}/>
+                        </div>
+                    
+                        <p>
+                            <button className="govuk-button" type="submit">Continue</button>
+                        </p>
+                    </form>
+                </main>
+            </div>
         </div>
     );
 }

@@ -1,14 +1,17 @@
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
 import { parseCookies, setCookie, destroyCookie } from 'nookies'
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import Header from '../../components/header';
 
 export default function CheckYourAnswers() {
     const router = useRouter();
     const [id, setId] = useState('');
     const cookies = parseCookies();
-    let post = JSON.parse(cookies.newPost);
+    let post;
+    if (cookies && cookies.newPost) {
+        post = JSON.parse(cookies.newPost);
+    }
     let title = '';
     let body = '';
     if (typeof post !== 'undefined') {
@@ -20,8 +23,6 @@ export default function CheckYourAnswers() {
     const handleSubmit = (event) => {
         console.log("handle submit");
         event.preventDefault();
-        
-
         
         fetch('https://my-json-server.typicode.com/baowen/demo/posts', {
             method: 'POST',
@@ -50,29 +51,42 @@ export default function CheckYourAnswers() {
 
     
     return (
-        <div className={styles.container}>
+        <div>
             <Head>
                 <title>Check your answers</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <Header />
             
-            <main className={styles.main}>
-                <h1 className={styles.body}>
-                    Check your answers
-                </h1>
-                <div>
-                    title: {title}
-                </div>
-                <div>
-                    body: {body}
-                </div>
+            <div class="govuk-width-container">
+                <main class="govuk-main-wrapper " id="main-content" role="main">
+                    <h1 className="govuk-heading-l">Check your answers before sending your post</h1>
+                    <dl className="govuk-summary-list govuk-!-margin-bottom-9">
+                        <div className="govuk-summary-list__row">
+                            <dt className="govuk-summary-list__key">
+                                Title
+                            </dt>
+                            <dd className="govuk-summary-list__value">
+                                {title}
+                            </dd>
+                        </div>
+                        <div className="govuk-summary-list__row">
+                            <dt className="govuk-summary-list__key">
+                                Body
+                            </dt>
+                            <dd className="govuk-summary-list__value">
+                                {body}
+                            </dd>
+                        </div>
+                    </dl>
                 
-                <form onSubmit={handleSubmit}>
-                    <p>
-                        <button type="submit">Continue and submit</button>
-                    </p>
-                </form>
-            </main>
+                    <form onSubmit={handleSubmit}>
+                        <p>
+                            <button className="govuk-button" type="submit">Continue and submit</button>
+                        </p>
+                    </form>
+                </main>
+            </div>
         </div>
     );
 }
